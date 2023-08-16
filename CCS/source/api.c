@@ -112,12 +112,25 @@ void state2_func(unsigned int i,unsigned int j,  char src_matrix[][M] ,  char ds
 void state3_func(int * arr){
         lcd_clear();
         DMA_start(arr);
+        PBsArrIntEn = 0x00;
       __bis_SR_register(LPM0_bits + GIE);       // Enter LPM0
          DMA_stop();
 }
 
 
+void state4_func(char * src, char * dst, int blk_sz)
+{
+    int i;
+    lcd_clear();
+    DMA_ST4_start(src+blk_sz-2, dst,  blk_sz);
+    for(i=32;i>0;i--){
+        if(i==16)lcd_new_line;
+        lcd_data(*dst++);
 
+    }
+
+
+}
 
 
 

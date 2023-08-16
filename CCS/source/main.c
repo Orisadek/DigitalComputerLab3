@@ -1,5 +1,6 @@
 #include  "../header/api.h"    		// private library - API layer
 #include  "../header/app.h"    		// private library - APP layer
+//#include  <string.h>
 #define ascii_offset 48
 
 
@@ -24,6 +25,9 @@ void main(void){
   };
   char data_matrix_out[N][M];
   int ledsArr [8] = {0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80};
+  char str[158] = "Google Colaboratory is a free Jupyter notebook environment that runs on Google’s cloud servers, letting the user leverage backend hardware like GPUs and TPUs";
+  char strMirror[158]  = {0};
+
   state = state0;  // start in idle state on RESET
   lpm_mode = mode0;     // start in idle state on RESET
   sysConfig();
@@ -49,7 +53,8 @@ void main(void){
 	    break;
 
 	  case state4:
-
+	      state4_func(str, strMirror, 158);
+	      state = state0;
 	    break;
 	}
   }

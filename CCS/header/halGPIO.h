@@ -30,6 +30,7 @@ extern void start_timer();
 extern void stop_timer();
 extern char return_flag();
 extern void transferBlock(char * addr_src, char * adrr_dst, int blk_sz);
+extern void DMA_ST4_start(char * addr_src, char * adrr_dst, int blk_sz);
 extern __interrupt void PBs_handler(void);
 extern __interrupt void TIMER_B_ISR(void);
 extern  __interrupt void KEYPAD_REQ(void);

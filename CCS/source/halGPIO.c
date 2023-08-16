@@ -241,7 +241,7 @@ void DMA_start(int *arr){
 }
 
 void DMA_stop(){
-    DMA0CTL &= ~DMAEN +~DMAIE;
+    DMA0CTL &= ~DMAEN + ~DMAIE;
     P9OUT &= ~0xFF;
     TBCTL &=MC_0;
 }
@@ -255,6 +255,18 @@ void transferBlock(char * addr_src, char * adrr_dst, int blk_sz){
     DMA1CTL |= DMAEN;                         // Enable DMA0
     DMA1CTL |= DMAREQ;                        // triger DMA
 }
+
+void DMA_ST4_start(char * addr_src, char * adrr_dst, int blk_sz){
+       WDTCTL = WDTPW + WDTHOLD;                 // Stop WDT
+       DMA2SA = (void (*)( ))addr_src;            // Start block address
+       DMA2DA = (void (*)( ))adrr_dst;            // Destination block address
+       DMA2SZ = blk_sz;                          // Block size
+       DMA2CTL = DMADT_1 + DMASRCINCR_2 + DMADSTINCR_3 + DMASRCBYTE + DMADSTBYTE; // Rpt, inc
+       DMA2CTL |= DMAEN;                         // Enable DMA0
+       DMA2CTL |= DMAREQ;                        // triger DMA
+}
+
+
 
 //*********************************************************************
 //            Port1 Interrupt Service Rotine
@@ -454,7 +466,8 @@ void __attribute__ ((interrupt(DMA_VECTOR))) DMA0_handler (void)
       switch(DMAIV){
       case 0x02:
         // if(LEDSOUT == 0x00)
-             enable_interrupts();
+          __bis_SR_register(GIE);
+             PBsArrIntEn |= 0x0F;
        //  else
           //   disable_interrupts();
         //break;
