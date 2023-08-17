@@ -26,7 +26,7 @@ With each button press, we enter a state:
    using only DMA light single led and shifting it from left to right in a cycle with a delay of 500ms (Trigger of TimerB).
 
 ## Sleep Mode (state0):
-state0 is in sleep mode (LPM0) and every state except the state3 returns to sleep after the state ends.
+state0 is in sleep mode (LPM0).
 
 ## Real-Time assignment: 
 add state4 as follows,
